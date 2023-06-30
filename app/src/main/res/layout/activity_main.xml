@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior"
+        android:id="@+id/appbar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:background="@color/green_primary"
+            app:titleTextColor="#ffffff"
+            android:id="@+id/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+       
+    >
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+        >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/noteRecyclerView"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+            />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/add_48px"
+                app:fabSize="normal"
+                app:tint="#ffffff"
+                android:scaleType="center"
+                app:backgroundTint="#4B7A17"
+            />
+
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
