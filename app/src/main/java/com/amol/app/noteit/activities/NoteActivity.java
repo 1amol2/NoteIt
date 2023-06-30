@@ -39,8 +39,6 @@ public class NoteActivity extends AppCompatActivity {
     setContentView(binding.getRoot());
     init();
 
-          
-
     binding.noteSaveBtn.setOnClickListener(
         p1 -> {
           addNote();
@@ -52,13 +50,12 @@ public class NoteActivity extends AppCompatActivity {
     firebaseDb = FirebaseFirestore.getInstance();
     cRef = firebaseDb.collection("Notes");
     key = UUID.randomUUID().toString();
-    if(getIntent().getExtras().getString("Intent").equals("Intent_A")){
-        
-    
-    mUid = getIntent().getExtras().getString("Uid");
-    mTitle = getIntent().getExtras().getString("Title");
-    mText = getIntent().getExtras().getString("Text");
-            handler = new Handler();
+    if (getIntent().getExtras().getString("Intent").equals("Intent_A")) {
+
+      mUid = getIntent().getExtras().getString("Uid");
+      mTitle = getIntent().getExtras().getString("Title");
+      mText = getIntent().getExtras().getString("Text");
+      handler = new Handler();
 
       thread =
           new Thread(
@@ -70,8 +67,7 @@ public class NoteActivity extends AppCompatActivity {
                 }
               });
       thread.start();
-    
-    }        
+    }
   }
 
   private void addNote() {
@@ -102,15 +98,4 @@ public class NoteActivity extends AppCompatActivity {
               });
     }
   }
-
-  @Override
-  @MainThread
-  public void onBackPressed() {
-    if (!title.isEmpty() && !text.isEmpty()) {
-
-      addNote();
-
-    
-  }
-}
 }

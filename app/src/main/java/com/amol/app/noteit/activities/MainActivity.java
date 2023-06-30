@@ -34,13 +34,9 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
-    //  db_key = getIntent().getExtras().getString("db_key");
     setSupportActionBar(binding.toolbar);
     // Initialise Views
     init();
-    Log.d("MainActivity.java", "Hell");
-
-    // Toast.makeText(this, "key: " + db_key, Toast.LENGTH_SHORT).show();
 
     handler = new Handler();
 
@@ -84,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
     binding.addBtn.setOnClickListener(
         p1 -> {
-                Intent intent=new Intent(MainActivity.this,NoteActivity.class);
-                intent.putExtra("Intent","Intent_B");
-                startActivity(intent);
-       
+          Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+          intent.putExtra("Intent", "Intent_B");
+          startActivity(intent);
         });
+        
     mAdapter.setClickListener(
         new OnItemClickListener() {
           @Override
@@ -100,12 +96,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity.java", "Title: " + mTitle + "\n Text: " + mText + "\n \n");
 
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-            intent.putExtra("Intent","Intent_A");
+            intent.putExtra("Intent", "Intent_A");
             intent.putExtra("Uid", uid);
             intent.putExtra("Title", mTitle);
             intent.putExtra("Text", mText);
             startActivity(intent);
-              
           }
         });
   }
