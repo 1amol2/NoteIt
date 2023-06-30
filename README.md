@@ -1,7 +1,7 @@
 # NoteIt
 
 The Notes App is a simple and intuitive application that allows you to create and manage your personal notes. 
-Whether you need to jot down a quick reminder, make a to-do list, or store important information, this app has got you covered.
+Whether you need to note down a quick reminder, make a to-do list, or store important information, this app has got you covered.
 
 # Features
 
@@ -11,3 +11,4 @@ Whether you need to jot down a quick reminder, make a to-do list, or store impor
 [ ] Organize your notes using categories or tags.
 [ ] Search for specific notes based on keywords.
 [ ] Mark notes as favorites for quick access.
+[ ] Encrypted Notes
