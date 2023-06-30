@@ -5,7 +5,7 @@ Whether you need to note down a quick reminder, make a to-do list, or store impo
 
 # Features
 
-[X] Create new notes with a title and content.
+- [X] Create new notes with a title and content.
 [ ] Edit existing notes to add or modify information.
 [ ] Delete unwanted notes.
 [ ] Organize your notes using categories or tags.
