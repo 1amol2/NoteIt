@@ -2,22 +2,10 @@ package com.amol.app.noteit.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import com.amol.app.noteit.databinding.ActivityNoteBinding;
 import com.amol.app.noteit.model.NoteItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,8 +16,7 @@ public class NoteActivity extends AppCompatActivity {
   private FirebaseFirestore firebaseDb;
   private CollectionReference cRef;
   private DocumentReference dRef;
-  private String key, uid, mTitle, mText, mUid, title, text;
-  private Handler handler;
+  private String key, uid, mTitle, mText, mUid, title, text, currentTitle, currentText;
   private Thread thread;
 
   @Override
@@ -38,11 +25,6 @@ public class NoteActivity extends AppCompatActivity {
     binding = ActivityNoteBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
     init();
-
-    binding.noteSaveBtn.setOnClickListener(
-        p1 -> {
-          addNote();
-        });
   }
 
   private void init() {
@@ -55,18 +37,23 @@ public class NoteActivity extends AppCompatActivity {
       mUid = getIntent().getExtras().getString("Uid");
       mTitle = getIntent().getExtras().getString("Title");
       mText = getIntent().getExtras().getString("Text");
-      handler = new Handler();
 
-      thread =
-          new Thread(
-              new Runnable() {
-                @Override
-                public void run() {
-                  binding.noteTitle.setText(mTitle);
-                  binding.noteText.setText(mText);
-                }
-              });
-      thread.start();
+      binding.noteTitle.setText(mTitle);
+      binding.noteText.setText(mText);
+
+      currentTitle = mTitle;
+      currentText = mText;
+
+      binding.noteSaveBtn.setOnClickListener(
+          p3 -> {
+            updateNote(
+                binding.noteTitle.getText().toString(), binding.noteText.getText().toString());
+          });
+    } else {
+      binding.noteSaveBtn.setOnClickListener(
+          p1 -> {
+            addNote();
+          });
     }
   }
 
@@ -74,28 +61,77 @@ public class NoteActivity extends AppCompatActivity {
     title = binding.noteTitle.getText().toString();
 
     text = binding.noteText.getText().toString();
-    Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
 
     if (!title.isEmpty() && !text.isEmpty()) {
-      Toast.makeText(this, "not empty", Toast.LENGTH_SHORT).show();
 
-      NoteItem noteItem = new NoteItem(key, title, text);
-      cRef.document(key)
-          .set(noteItem)
-          .addOnCompleteListener(
-              task -> {
-                if (task.isSuccessful()) {
-                  Intent intent = new Intent(NoteActivity.this, MainActivity.class);
-                  intent.putExtra("uid", key);
-                  intent.putExtra("title", title);
-                  intent.putExtra("text", text);
-                  startActivity(intent);
-                  finish();
+      thread =
+          new Thread(
+              new Runnable() {
+                @Override
+                public void run() {
 
-                } else {
-                  Toast.makeText(this, "noOOO", Toast.LENGTH_SHORT).show();
+                  NoteItem noteItem = new NoteItem(key, title, text);
+                  cRef.document(key)
+                      .set(noteItem)
+                      .addOnCompleteListener(
+                          task -> {
+                            if (task.isSuccessful()) {
+                              Intent intent = new Intent(NoteActivity.this, MainActivity.class);
+
+                              startActivity(intent);
+                              finish();
+
+                            } else {
+                              Toast.makeText(
+                                      NoteActivity.this,
+                                      task.getException().getMessage().toString(),
+                                      Toast.LENGTH_SHORT)
+                                  .show();
+                            }
+                          });
                 }
               });
+      thread.start();
+    }
+  }
+
+  private void updateNote(String title, String text) {
+    if (!currentTitle.equals(title) || !currentText.equals(text)) {
+
+      thread =
+          new Thread(
+              new Runnable() {
+                @Override
+                public void run() {
+
+                  NoteItem item = new NoteItem(mUid, title, text);
+                  cRef.document(mUid)
+                      .set(item)
+                      .addOnSuccessListener(
+                          p1 -> {
+                            Toast.makeText(
+                                    NoteActivity.this,
+                                    "Note Updated Successfully",
+                                    Toast.LENGTH_SHORT)
+                                .show();
+                            Intent intent = new Intent(NoteActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                          })
+                      .addOnFailureListener(
+                          p2 -> {
+                            Toast.makeText(
+                                    NoteActivity.this,
+                                    p2.getMessage().toString(),
+                                    Toast.LENGTH_SHORT)
+                                .show();
+                          });
+                }
+              });
+      thread.start();
+
+    } else {
+      finish();
     }
   }
 }
