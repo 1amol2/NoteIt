@@ -8,6 +8,7 @@ Whether you need to note down a quick reminder or store important information, t
 - [X] Create new notes with a title and content.
 - [X] Edit existing notes to add or modify information.
 - [ ] Delete unwanted notes.
+
 ----------------------------------------
 ## For V:1.1.0
 - [ ] Encrypted Notes
