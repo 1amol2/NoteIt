@@ -2,18 +2,12 @@ package com.amol.app.noteit.activities;
 
 import android.content.Intent;
 import android.os.*;
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.amol.app.noteit.adapter.MyNotesAdapter;
 import com.amol.app.noteit.databinding.ActivityMainBinding;
 import com.amol.app.noteit.model.NoteItem;
 import com.amol.app.noteit.utils.OnItemClickListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -84,16 +78,14 @@ public class MainActivity extends AppCompatActivity {
           intent.putExtra("Intent", "Intent_B");
           startActivity(intent);
         });
-        
+
     mAdapter.setClickListener(
         new OnItemClickListener() {
           @Override
           public void onItemClick(int position, String uid) {
-            // TODO: Implement this method
+            // View note
             String mTitle = noteList.get(position).getTitle().toString();
             String mText = noteList.get(position).getText().toString();
-
-            Log.d("MainActivity.java", "Title: " + mTitle + "\n Text: " + mText + "\n \n");
 
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
             intent.putExtra("Intent", "Intent_A");
