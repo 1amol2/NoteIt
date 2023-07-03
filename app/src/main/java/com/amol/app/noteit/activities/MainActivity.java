@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
   private ArrayList<NoteItem> noteList;
   private MyNotesAdapter mAdapter;
   private Thread thread;
-  private Handler handler;
   private CollectionReference cRef;
 
   @Override
@@ -31,44 +30,19 @@ public class MainActivity extends AppCompatActivity {
     setSupportActionBar(binding.toolbar);
     // Initialise Views
     init();
-
-    handler = new Handler();
-
-    thread =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-
-                cRef.get()
-                    .addOnSuccessListener(
-                        dSnap -> {
-                          for (QueryDocumentSnapshot snap : dSnap) {
-                            NoteItem note = snap.toObject(NoteItem.class);
-
-                            String id = note.getUid();
-                            String title = note.getTitle();
-                            String text = note.getText();
-
-                            noteList.add(note);
-
-                            mAdapter.notifyItemInserted(noteList.size() - 1);
-                          }
-                        });
-              }
-            });
-
-    thread.start();
   }
 
   private void init() {
+
     cRef = FirebaseFirestore.getInstance().collection("Notes");
+
     noteList = new ArrayList<NoteItem>();
 
     LinearLayoutManager llm = new LinearLayoutManager(this);
     llm.setOrientation(LinearLayoutManager.VERTICAL);
 
     mAdapter = new MyNotesAdapter(noteList, this);
+
     binding.noteRecyclerView.setLayoutManager(llm);
     binding.noteRecyclerView.setAdapter(mAdapter);
 
@@ -95,6 +69,31 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
           }
         });
+    thread =
+        new Thread(
+            new Runnable() {
+              @Override
+              public void run() {
+
+                cRef.get()
+                    .addOnSuccessListener(
+                        dSnap -> {
+                          for (QueryDocumentSnapshot snap : dSnap) {
+                            NoteItem note = snap.toObject(NoteItem.class);
+
+                            String id = note.getUid();
+                            String title = note.getTitle();
+                            String text = note.getText();
+
+                            noteList.add(note);
+
+                            mAdapter.notifyItemInserted(noteList.size() - 1);
+                          }
+                        });
+              }
+            });
+
+    thread.start();
   }
 
   @Override
