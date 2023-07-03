@@ -2,7 +2,6 @@ package com.amol.app.noteit.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.amol.app.noteit.databinding.ActivityNoteBinding;
@@ -99,63 +98,63 @@ public class NoteActivity extends AppCompatActivity {
   private void updateNote(String title, String text) {
     if (!currentTitle.equals(title) || !currentText.equals(text)) {
 
+      if (!title.isEmpty() && !text.isEmpty()) {
 
-    text = binding.noteText.getText().toString();
-    
-    if (!title.isEmpty() && !text.isEmpty()) {
-      Toast.makeText(this, "not empty", Toast.LENGTH_SHORT).show();
+        NoteItem noteItem = new NoteItem(key, title, text);
+        cRef.document(key)
+            .set(noteItem)
+            .addOnCompleteListener(
+                task -> {
+                  if (task.isSuccessful()) {
+                    Intent intent = new Intent(NoteActivity.this, MainActivity.class);
+                    intent.putExtra("uid", key);
+                    intent.putExtra("title", title);
+                    intent.putExtra("text", text);
+                    startActivity(intent);
+                    finish();
 
-      NoteItem noteItem = new NoteItem(key, title, text);
-      cRef.document(key)
-          .set(noteItem)
-          .addOnCompleteListener(
-              task -> {
-                if (task.isSuccessful()) {
-                  Intent intent = new Intent(NoteActivity.this, MainActivity.class);
-                  intent.putExtra("uid", key);
-                  intent.putExtra("title", title);
-                  intent.putExtra("text", text);
-                  startActivity(intent);
-                  finish();
+                  } else {
+                    Toast.makeText(
+                            this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT)
+                        .show();
+                  }
 
-                } else {
-                  Toast.makeText(this, "noOOO", Toast.LENGTH_SHORT).show();
+                  thread =
+                      new Thread(
+                          new Runnable() {
+                            @Override
+                            public void run() {
 
-      thread =
-          new Thread(
-              new Runnable() {
-                @Override
-                public void run() {
-
-                  NoteItem item = new NoteItem(mUid, title, text);
-                  cRef.document(mUid)
-                      .set(item)
-                      .addOnSuccessListener(
-                          p1 -> {
-                            Toast.makeText(
-                                    NoteActivity.this,
-                                    "Note Updated Successfully",
-                                    Toast.LENGTH_SHORT)
-                                .show();
-                            Intent intent = new Intent(NoteActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                          })
-                      .addOnFailureListener(
-                          p2 -> {
-                            Toast.makeText(
-                                    NoteActivity.this,
-                                    p2.getMessage().toString(),
-                                    Toast.LENGTH_SHORT)
-                                .show();
+                              NoteItem item = new NoteItem(mUid, title, text);
+                              cRef.document(mUid)
+                                  .set(item)
+                                  .addOnSuccessListener(
+                                      p1 -> {
+                                        Toast.makeText(
+                                                NoteActivity.this,
+                                                "Note Updated Successfully",
+                                                Toast.LENGTH_SHORT)
+                                            .show();
+                                        Intent intent =
+                                            new Intent(NoteActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                      })
+                                  .addOnFailureListener(
+                                      p2 -> {
+                                        Toast.makeText(
+                                                NoteActivity.this,
+                                                p2.getMessage().toString(),
+                                                Toast.LENGTH_SHORT)
+                                            .show();
+                                      });
+                            }
                           });
-
-                }
-              });
-      thread.start();
-
-    } else {
-      finish();
+                  thread.start();
+                });
+      }else{
+          finish();
+      }
     }
   }
 }
