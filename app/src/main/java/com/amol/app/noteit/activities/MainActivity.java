@@ -2,7 +2,6 @@ package com.amol.app.noteit.activities;
 
 import android.content.Intent;
 import android.os.*;
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.amol.app.noteit.adapter.MyNotesAdapter;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         new OnItemClickListener() {
           @Override
           public void onItemClick(int position, String uid) {
-            // TODO: Implement this method
+            // View note
             String mTitle = noteList.get(position).getTitle().toString();
             String mText = noteList.get(position).getText().toString();
 
