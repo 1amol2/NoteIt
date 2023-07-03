@@ -29,7 +29,6 @@
                 app:icon="@drawable/arrow_back_48px"
                 android:layout_margin="4dp"
                 app:iconTint="#000000"
-                android:inputType="textMultiLine"
                 style="@style/Widget.Material3.Button.IconButton"
             />
         </LinearLayout>

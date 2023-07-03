@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +10,8 @@
     android:minHeight="50dp"
     style="@style/Widget.Material3.CardView.Elevated"
     app:cardCornerRadius="14dp"
+    android:longClickable="true"
+    android:clickable="true"
 >
 
     <LinearLayout
@@ -19,19 +20,33 @@
         android:orientation="vertical"
         android:paddingBottom="5dp"
         android:minHeight="50dp"
-        android:paddingTop="3dp"
-        android:padding="3dp"
     >
-        <TextView
-            android:id="@+id/noteTitle"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Hello"
-            android:layout_margin="6dp"
-            android:layout_marginBottom="3dp"
-            android:textColor="#212121"
-            android:textSize="21sp"
-        />
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+        >
+            <TextView
+                android:id="@+id/noteTitle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Hello"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1.0"
+                android:textColor="#212121"
+                android:textSize="21sp"
+            />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/noteOptionBtn"
+                android:layout_height="40dp"
+                android:layout_width="50dp"
+                app:icon="@drawable/more_vert_48px"
+                app:iconTint="#000000"
+                style="@style/Widget.Material3.Button.IconButton"
+            />
+        </LinearLayout>
         <TextView
             android:id="@+id/noteText"
             android:layout_height="wrap_content"
