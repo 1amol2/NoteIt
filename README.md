@@ -11,6 +11,11 @@ Whether you need to note down a quick reminder or store important information, t
 - [X] Edit existing notes to add or modify information.
 - [X] Delete unwanted notes
 
+## For V:1.1.0
+- [ ] Encrypted Notes
+- [ ] Dark Theme
+
+
 ## Screenshot
 
 ![Screenshot_2023-07-01-17-27-27-452_com amol app noteit](https://github.com/1amol2/NoteIt/assets/50043942/c8d1bf84-1d36-4750-a173-6ef2d857079a)
@@ -18,6 +23,3 @@ Whether you need to note down a quick reminder or store important information, t
 ![Screenshot_2023-07-01-17-27-22-465_com amol app noteit](https://github.com/1amol2/NoteIt/assets/50043942/09c202c9-fc19-4735-9281-33867c17d264)
 
 ----------------------------------------
-## For V:1.1.0
-- [ ] Encrypted Notes
-- [ ] Dark Theme
