@@ -3,6 +3,7 @@ package com.amol.app.noteit.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import com.amol.app.noteit.databinding.ActivityNoteBinding;
 import com.amol.app.noteit.model.NoteItem;
@@ -152,9 +153,18 @@ public class NoteActivity extends AppCompatActivity {
                           });
                   thread.start();
                 });
-      }else{
-          finish();
+      } else {
+        finish();
       }
     }
+  }
+
+  @Override
+  @MainThread
+  public void onBackPressed() {
+    // TODO: Implement this method
+    Intent intent = new Intent(NoteActivity.this, MainActivity.class);
+    startActivity(intent);
+    finish();
   }
 }

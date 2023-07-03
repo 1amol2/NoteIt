@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
           Intent intent = new Intent(MainActivity.this, NoteActivity.class);
           intent.putExtra("Intent", "Intent_B");
           startActivity(intent);
+          finish();
         });
 
     mAdapter.setClickListener(
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("Title", mTitle);
             intent.putExtra("Text", mText);
             startActivity(intent);
+            finish();
           }
         });
     thread =
