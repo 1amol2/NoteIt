@@ -26,6 +26,7 @@ public class MyNotesAdapter extends RecyclerView.Adapter<MyNotesAdapter.NotesVie
   public MyNotesAdapter(ArrayList<NoteItem> notesList, Context context) {
     this.notesList = notesList;
     this.context = context;
+    setHasStableIds(true);
   }
 
   @Override
@@ -36,10 +37,12 @@ public class MyNotesAdapter extends RecyclerView.Adapter<MyNotesAdapter.NotesVie
 
   @Override
   public void onBindViewHolder(MyNotesAdapter.NotesViewHolder arg0, int arg1) {
-    NoteItem item = notesList.get(arg1);
+    int currentPosition = arg0.getAdapterPosition();
 
-    title = notesList.get(arg1).getTitle();
-    text = notesList.get(arg1).getText();
+    NoteItem item = notesList.get(currentPosition);
+
+    title = notesList.get(currentPosition).getTitle();
+    text = notesList.get(currentPosition).getText();
 
     arg0.noteTitle.setText(title);
     arg0.noteText.setText(text);
@@ -65,7 +68,7 @@ public class MyNotesAdapter extends RecyclerView.Adapter<MyNotesAdapter.NotesVie
                             .collection("Notes")
                             .document(item.getUid())
                             .delete();
-                        notifyItemRemoved(arg1);
+                        notifyItemRemoved(currentPosition);
                         return true;
                     }
                     return false;
@@ -92,7 +95,6 @@ public class MyNotesAdapter extends RecyclerView.Adapter<MyNotesAdapter.NotesVie
 
     public NotesViewHolder(View v) {
       super(v);
-
       noteText = v.findViewById(R.id.noteText);
       noteTitle = v.findViewById(R.id.noteTitle);
       optionBtn = v.findViewById(R.id.noteOptionBtn);
